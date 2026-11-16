@@ -1,5 +1,5 @@
 """
-Semana 3 — Reescrevendo com programação funcional
+Semanas 3 e 4 — Programação funcional
 
 Regras do paradigma:
 - sem `class` (exceto a namedtuple Item);
@@ -8,6 +8,7 @@ Regras do paradigma:
 """
 
 from collections import namedtuple
+from functools import reduce
 
 ALIQUOTA_PADRAO = 0.25
 
@@ -56,3 +57,48 @@ def economia_total(itens):
         map(lambda item: round(item.preco * ALIQUOTA_PADRAO, 2) * item.quantidade, itens)
     )
     return round(com_padrao - total_impostos(itens), 2)
+
+
+# ---------- Semana 4: funções de ordem superior ----------
+
+def criar_calculadora(aliquota_padrao):
+    """Devolve uma função calcular(item) que usa outra alíquota padrão (closure)."""
+    if aliquota_padrao < 0:
+        raise ValueError("A alíquota padrão não pode ser negativa.")
+
+    aliquotas = {
+        "cesta_basica": 0.0,
+        "reduzido": aliquota_padrao * 0.4,
+        "padrao": aliquota_padrao,
+    }
+
+    def calcular(item):
+        por_unidade = round(item.preco * aliquotas[item.categoria], 2)
+        return round(por_unidade * item.quantidade, 2)
+
+    return calcular
+
+
+def compor(*funcoes):
+    """compor(f, g)(x) == f(g(x)): aplica as funções da direita para a esquerda."""
+    return lambda x: reduce(lambda acumulado, f: f(acumulado), reversed(funcoes), x)
+
+
+def valor_item(item):
+    """Valor final do item (preço x quantidade + imposto)."""
+    return round(item.preco * item.quantidade + imposto_item(item), 2)
+
+
+def gerar_relatorio(itens):
+    """Resumo da compra: valor por categoria, impostos, total e economia."""
+    return {
+        "por_categoria": {
+            categoria: round(
+                sum(map(valor_item, filtrar_por_categoria(itens, categoria))), 2
+            )
+            for categoria in ALIQUOTAS
+        },
+        "total_impostos": total_impostos(itens),
+        "total": total_compra(itens),
+        "economia": economia_total(itens),
+    }
