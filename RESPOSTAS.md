@@ -1,6 +1,6 @@
 # Respostas — Reflexão sobre os paradigmas
 
-**Nome:Renatto Gabriel Lira Freire Duarte**
+**Nome: Renatto Gabriel Lira Freire Duarte**
 **Matrícula: 2536043**
 
 ## 1. Orientação a objetos
