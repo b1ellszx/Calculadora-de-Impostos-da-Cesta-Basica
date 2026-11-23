@@ -24,7 +24,7 @@ Se o governo criasse uma nova categoria de produto (por exemplo, "redução de 3
 
 **Na versão funcional:** adicionaria a categoria no dicionário `ALIQUOTAS` e também no dicionário dentro da `criar_calculadora`. O `gerar_relatorio` já pegaria a nova categoria sozinho.
 
-Para mim, a versão com objetos é mais fácil de alterar, porque a mudança é só acrescentar código novo, sem editar o que já funciona. Na funcional são poucas linhas, mas esquecer um dos dois dicionários causa erro.
+Pra mim, a versão com objetos é mais fácil de alterar, porque a mudança é só acrescentar código novo, sem editar o que já funciona. Na funcional são poucas linhas, mas esquecer um dos dois dicionários causa erro.
 
 ## 4. Alíquota zero
 Explique, com suas palavras, por que um produto da cesta básica ainda executa o método `imposto()` em vez de "pular" o cálculo.
